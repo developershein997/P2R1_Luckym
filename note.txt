@@ -99,261 +99,33 @@ mv app/Http/Controllers/Api/V1/gplus/Webhook/SeamlessWalletController.php app/Ht
 GET /api/operators/provider-games?product_code=...&operator_code=...&offset=...&size=...&game_type=...
 
 
-api/operators/wagers?operator_code=E004&sign=xxxxxx&request_time=1
- 69155100?start=169155100000&end=169155100000
+---------------- 
+CREATE DATABASE luckym;
+CREATE USER lucky_user WITH PASSWORD 'luckymillion';
+GRANT ALL PRIVILEGES ON DATABASE luckym TO lucky_user;
+ALTER USER lucky_user WITH PASSWORD 'luckymillion';
 
- public function show(Request $request, $member_account)
-    {
-        $user = Auth::user();
-        $query = PlaceBet::query()->where('member_account', $member_account);
+sudo -i -u postgres
+psql -d luckym
 
-        // Get the player user record
-        $player = User::where('user_name', $member_account)->first();
-        if (!$player) {
-            abort(404, 'Player not found');
-        }
+psql -h 127.0.0.1 -U lucky_user -d luckym
 
-        if ($user->user_type === UserType::Owner->value) {
-            // Owner: see all
-        } elseif ($user->user_type === UserType::Master->value) {
-            // Master: see bets for players under their agents
-            $agentIds = User::where('agent_id', $user->id)->pluck('id');
-            $subAgentIds = User::whereIn('agent_id', $agentIds)->pluck('id');
-            $playerIds = User::whereIn('agent_id', $subAgentIds)->pluck('id');
-            
-            if (!$playerIds->contains($player->id)) {
-                abort(403, 'Unauthorized access to player data');
-            }
-        } elseif ($user->user_type === UserType::Agent->value) {
-            // Agent: see bets for players under their sub-agents
-            $subAgentIds = User::where('agent_id', $user->id)->pluck('id');
-            $playerIds = User::whereIn('agent_id', $subAgentIds)->pluck('id');
-            
-            if (!$playerIds->contains($player->id)) {
-                abort(403, 'Unauthorized access to player data');
-            }
-        } elseif ($user->user_type === UserType::SubAgent->value) {
-            // SubAgent: see bets only for their direct players
-            $playerIds = User::where('agent_id', $user->id)->pluck('id');
-            
-            if (!$playerIds->contains($player->id)) {
-                abort(403, 'Unauthorized access to player data');
-            }
-        } elseif ($user->user_type === UserType::Player->value) {
-            // Player: see only their own bets
-            if ($user->id !== $player->id) {
-                abort(403, 'Unauthorized access to player data');
-            }
-        } else {
-            abort(403, 'Unauthorized access');
-        }
+sudo -i -u postgres
+psql
 
-        $bets = $query->orderByDesc('created_at')->paginate(50);
-
-        return view('admin.report.show', compact('bets', 'member_account'));
-    }
-
-    composer require irazasyed/telegram-bot-sdk
-
-    composer require westacks/telebot-laravel
-    https://luckymillion.pro/telegram/webhook/set
-
-       https://luckymillion.pro/sendMessage?chat_id=YOUR_TELEGRAM_CHAT_ID
-
-       php artisan tinker
->>> config('telegram_welcome.en')
-
-curl -X POST https://luckymillion.pro/telegram-message-webhook \
-  -H "Content-Type: application/json" \
-  -d '{"message":{"chat":{"id":123456},"text":"hello"}}'
+-- In psql shell:
+ALTER USER lucky_user WITH PASSWORD 'luckymillion';
+GRANT ALL PRIVILEGES ON DATABASE luckym TO lucky_user;
+\c luckym
+ALTER SCHEMA public OWNER TO lucky_user;
+GRANT ALL ON SCHEMA public TO lucky_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO lucky_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO lucky_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO lucky_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO lucky_user;
 
 
-PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 1310720 bytes) in C:\xampp\htdocs\gsc_slot\gsc_plus\vendor\laravel\framework\src\Illuminate\Database\Connection.php on line 581
-
-   Symfony\Component\ErrorHandler\Error\FatalError
-
-  Allowed memory size of 536870912 bytes exhausted (tried to allocate 1310720 bytes)
-
-sudo nano /etc/php/8.1/fpm/php.ini
-memory_limit = 1024M
-sudo systemctl restart php8.1-fpm
-sudo systemctl restart nginx
-php artisan make:migration add_note_to_deposit_requests_table --create=deposit_requests
-
-/// 
-player list 
-public function index()
-    {
-        abort_if(
-            Gate::denies('player_index'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
-        
-
-        $players = User::with(['roles', 'placeBets'])->whereHas('roles', fn ($query) => $query->where('role_id', self::PLAYER_ROLE))
-            ->select('id', 'name', 'user_name', 'phone', 'status', 'referral_code')
-            ->where('agent_id', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $reportData = DB::table('users as p')
-            ->join('place_bets', 'place_bets.member_account', '=', 'p.user_name')
-            ->groupBy('p.id')
-            ->selectRaw('p.id as player_id,SUM(place_bets.bet_amount) as total_bet_amount,SUM(place_bets.prize_amount) as total_payout_amount')
-            ->get()
-            ->keyBy('player_id');
-
-        $users = $players->map(function ($player) use ($reportData) {
-            $report = $reportData->get($player->id);
-            $poneWineTotalAmt = $player->children->flatMap->placeBets->sum('win_lose_amt');
-
-            return (object) [
-                'id' => $player->id,
-                'name' => $player->name,
-                'user_name' => $player->user_name,
-                'phone' => $player->phone,
-                'balanceFloat' => $player->balanceFloat,
-                'status' => $player->status,
-                'win_lose' => (($report->total_payout_amount ?? 0) - ($report->total_bet_amount ?? 0)) + $poneWineTotalAmt,
-            ];
-        });
-
-        return view('admin.player.index', compact('users'));
-    }
-    --------------------
-
-    public function index(Request $request): View
-    {
-        $user = Auth::user();
-        $relatedIds = $this->getDirectlyRelatedUserIds($user);
-
-        $query = TransferLog::with(['fromUser', 'toUser'])
-            ->where(function ($q) use ($user, $relatedIds) {
-                $q->where(function ($q2) use ($user, $relatedIds) {
-                    $q2->where('from_user_id', $user->id)
-                        ->whereIn('to_user_id', $relatedIds);
-                })
-                    ->orWhere(function ($q2) use ($user, $relatedIds) {
-                        $q2->where('to_user_id', $user->id)
-                            ->whereIn('from_user_id', $relatedIds);
-                    });
-            });
-
-        // Apply filters if provided
-        if ($request->has('type')) {
-            $query->where('type', $request->type);
-        }
-        if ($request->has('date_from') && $request->has('date_to')) {
-            $query->whereBetween('created_at', [$request->date_from, $request->date_to]);
-        }
-
-        $transferLogs = $query->latest()->paginate(20);
-
-        return view('admin.transfer_logs.index', compact('transferLogs'));
-    }
-
-    /**
-     * Get only directly related user IDs according to the hierarchy:
-     * Owner → Agent → SubAgent, Agent→Player, SubAgent→Player
-     */
-    private function getDirectlyRelatedUserIds(User $user): array
-    {
-        $relatedIds = [];
-        if ($user->hasRole('Owner')) {
-            // Owner: direct agents
-            $relatedIds = $user->children()->whereHas('roles', function ($q) {
-                $q->where('title', 'Agent');
-            })->pluck('id')->toArray();
-        } elseif ($user->hasRole('Agent')) {
-            // Agent: direct players, direct subagents, parent owner
-            $playerIds = $user->children()->whereHas('roles', function ($q) {
-                $q->where('title', 'Player');
-            })->pluck('id')->toArray();
-            $subAgentIds = $user->children()->whereHas('roles', function ($q) {
-                $q->where('title', 'SubAgent');
-            })->pluck('id')->toArray();
-            $parentOwnerId = $user->agent_id ? [$user->agent_id] : [];
-            $relatedIds = array_merge($playerIds, $subAgentIds, $parentOwnerId);
-        } elseif ($user->hasRole('SubAgent')) {
-            // SubAgent: direct players, parent agent
-            $playerIds = $user->children()->whereHas('roles', function ($q) {
-                $q->where('title', 'Player');
-            })->pluck('id')->toArray();
-            $parentAgentId = $user->agent_id ? [$user->agent_id] : [];
-            $relatedIds = array_merge($playerIds, $parentAgentId);
-        }
-
-        return array_unique($relatedIds);
-    }
-
-    ----------- player Controllers index -----------
-    public function index()
-    {
-        abort_if(
-            Gate::denies('player_index'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
-
-        $players = User::with(['roles', 'placeBets'])->whereHas('roles', fn ($query) => $query->where('role_id', self::PLAYER_ROLE))
-            ->select('id', 'name', 'user_name', 'phone', 'status', 'referral_code')
-            ->where('agent_id', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $reportData = DB::table('users as p')
-            ->join('place_bets', 'place_bets.member_account', '=', 'p.user_name')
-            ->groupBy('p.id')
-            ->selectRaw('p.id as player_id,SUM(place_bets.bet_amount) as total_bet_amount,SUM(place_bets.prize_amount) as total_payout_amount')
-            ->get()
-            ->keyBy('player_id');
-
-        $users = $players->map(function ($player) use ($reportData) {
-            $report = $reportData->get($player->id);
-            $poneWineTotalAmt = $player->children->flatMap->placeBets->sum('win_lose_amt');
-
-            return (object) [
-                'id' => $player->id,
-                'name' => $player->name,
-                'user_name' => $player->user_name,
-                'phone' => $player->phone,
-                'balanceFloat' => $player->balanceFloat,
-                'status' => $player->status,
-                'win_lose' => (($report->total_payout_amount ?? 0) - ($report->total_bet_amount ?? 0)) + $poneWineTotalAmt,
-            ];
-        });
-
-        return view('admin.player.index', compact('users'));
-    }
-                                                    <!-- <td class="{{$user->win_lose >= 0 ? 'text-success text-bold' : 'text-danger text-bold'}}">{{ number_format($user->win_lose)}}</td> -->
-    ---------------- 
-
-     /* Default styles (desktop view) */
-        /* .login-page {
-            background-image: url(assets/img/logo/default-logo.png);
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 100vh;
-             Full viewport height 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        } */
-
-public function gameLists($type, $provider, Request $request)
-    {
-        $gameLists = GameList::with('product')
-            ->where('product_id', $provider)
-            ->where('game_type_id', $type)
-            ->where('is_active', 1)
-            ->OrderBy('order', 'asc')
-            ->where('game_name', 'like', '%'.$request->game_name.'%')
-            ->get();
-
-        return $this->success(GameListResource::collection($gameLists));
-    }
-
-
-"{\"amount\":\"15\",\"provider_tx_id\":\"9668720aa4d3319c7398b700f5\",\"provider_username\":
-\"ce89ccb6f0e64071f8e5\",\"roundDetails\":\"spin\",\"username\":\"A3H1_efnf_PLAYER0101_403\"}"
+sudo chown -R www-data:www-data /var/www/shan_api_provider/storage
+sudo chown -R www-data:www-data /var/www/shan_api_provider/bootstrap/cache
+sudo chmod -R 775 /var/www/shan_api_provider/storage
+sudo chmod -R 775 /var/www/shan_api_provider/bootstrap/cache
