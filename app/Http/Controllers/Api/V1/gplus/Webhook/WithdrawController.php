@@ -26,7 +26,7 @@ class WithdrawController extends Controller
     /**
      * @var array Allowed currencies for withdraw.
      */
-    private array $allowedCurrencies = ['MMK', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+    private array $allowedCurrencies = ['THB', 'MMK', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
 
     /**
      * @var array Currencies requiring special conversion (e.g., 1:1000).

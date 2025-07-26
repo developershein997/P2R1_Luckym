@@ -24,7 +24,7 @@ class DepositController extends Controller
     /**
      * @var array Allowed currencies for deposit.
      */
-    private array $allowedCurrencies = ['MMK', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+    private array $allowedCurrencies = ['THB', 'MMK', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
 
     /**
      * @var array Actions considered as deposits.
