@@ -44,7 +44,7 @@ class GetBalanceController extends Controller
         $isValidCurrency = in_array($request->currency, $allowedCurrencies);
 
         $results = [];
-        $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+        $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2', 'THB'];
 
         foreach ($request->batch_requests as $req) {
             if (! $isValidSign) {
