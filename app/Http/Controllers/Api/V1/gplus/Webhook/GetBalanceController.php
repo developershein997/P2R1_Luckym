@@ -35,11 +35,10 @@ class GetBalanceController extends Controller
         // Allowed currencies
         // $allowedCurrencies = ['MMK', 'VND', 'INR', 'MYR', 'AOA', 'EUR', 'IDR', 'PHP', 'THB', 'JPY', 'COP', 'IRR', 'CHF', 'USD', 'MXN', 'ETB', 'CAD', 'BRL', 'NGN', 'KES', 'KRW', 'TND', 'LBP', 'BDT', 'CZK', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
 
-        $allowedCurrencies = ['THB', 'MMK', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+        $allowedCurrencies = ['THB', 'IDR'];
         $isValidCurrency = in_array($request->currency, $allowedCurrencies);
 
         $results = [];
-        $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
         foreach ($request->batch_requests as $req) {
             if (! $isValidSign) {
                 $results[] = [
@@ -68,12 +67,8 @@ class GetBalanceController extends Controller
             $user = User::with('wallet')->where('user_name', $req['member_account'])->first();
             if ($user && $user->wallet) {
                 $balance = $user->wallet->balanceFloat;
-                if (in_array($request->currency, $specialCurrencies)) {
-                    $balance = $balance / 1000; // Apply 1:1000 conversion here
-                    $balance = round($balance, 4);
-                } else {
-                    $balance = round($balance, 2);
-                }
+                // Both THB and IDR use 1:1 ratio (no conversion needed)
+                $balance = round($balance, 2);
                 $results[] = [
                     'member_account' => $req['member_account'],
                     'product_code' => $req['product_code'],
