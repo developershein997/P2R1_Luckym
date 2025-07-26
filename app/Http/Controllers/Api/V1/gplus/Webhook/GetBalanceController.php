@@ -32,11 +32,12 @@ class GetBalanceController extends Controller
         );
         $isValidSign = strtolower($request->sign) === strtolower($expectedSign);
 
-        // Allowed currencies - only THB and IDR with 1:1 ratio
-        $allowedCurrencies = ['THB', 'IDR'];
+        // Allowed currencies - support both regular (1:1) and special (1:1000) currencies
+        $allowedCurrencies = ['THB', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
         $isValidCurrency = in_array($request->currency, $allowedCurrencies);
 
         $results = [];
+        $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
         foreach ($request->batch_requests as $req) {
             if (! $isValidSign) {
                 $results[] = [
@@ -65,8 +66,12 @@ class GetBalanceController extends Controller
             $user = User::with('wallet')->where('user_name', $req['member_account'])->first();
             if ($user && $user->wallet) {
                 $balance = $user->wallet->balanceFloat;
-                // Both THB and IDR use 1:1 ratio (no conversion needed)
-                $balance = round($balance, 2);
+                if (in_array($request->currency, $specialCurrencies)) {
+                    $balance = $balance / 1000; // Apply 1:1000 conversion for special currencies
+                    $balance = round($balance, 4);
+                } else {
+                    $balance = round($balance, 2); // Regular currencies (THB, IDR) use 1:1 ratio
+                }
                 $results[] = [
                     'member_account' => $req['member_account'],
                     'product_code' => $req['product_code'],

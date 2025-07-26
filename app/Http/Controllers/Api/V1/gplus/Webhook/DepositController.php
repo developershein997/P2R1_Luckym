@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Log;
 class DepositController extends Controller
 {
     /**
-     * @var array Allowed currencies for deposit - only THB and IDR with 1:1 ratio.
+     * @var array Allowed currencies for deposit - support both regular (1:1) and special (1:1000) currencies.
      */
-    private array $allowedCurrencies = ['THB', 'IDR'];
+    private array $allowedCurrencies = ['THB', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
 
     /**
      * @var array Actions considered as deposits.
@@ -345,13 +345,19 @@ class DepositController extends Controller
 
     /**
      * Gets the currency conversion value.
-     * Both THB and IDR use 1:1 ratio.
+     * Regular currencies (THB, IDR) use 1:1 ratio, special currencies use different ratios.
      */
     private function getCurrencyValue(string $currency): int
     {
         return match ($currency) {
             'THB' => 1, // 1:1 ratio
             'IDR' => 1, // 1:1 ratio
+            'IDR2' => 100, // Special currency multiplier
+            'KRW2' => 10,
+            'MMK2' => 1000,
+            'VND2' => 1000,
+            'LAK2' => 10,
+            'KHR2' => 100,
             default => 1,
         };
     }

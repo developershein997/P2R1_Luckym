@@ -24,9 +24,14 @@ class WithdrawController extends Controller
     protected WalletService $walletService;
 
     /**
-     * @var array Allowed currencies for withdraw - only THB and IDR with 1:1 ratio.
+     * @var array Allowed currencies for withdraw - support both regular (1:1) and special (1:1000) currencies.
      */
-    private array $allowedCurrencies = ['THB', 'IDR'];
+    private array $allowedCurrencies = ['THB', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+
+    /**
+     * @var array Currencies requiring special conversion (e.g., 1:1000).
+     */
+    private array $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
 
     /**
      * @var array Actions considered as debits/withdrawals.
@@ -397,29 +402,43 @@ class WithdrawController extends Controller
     }
 
     /**
-     * Formats the balance based on the currency - both THB and IDR use 1:1 ratio.
+     * Formats the balance based on the currency - support both regular (1:1) and special (1:1000) currencies.
      */
     private function formatBalance(float $balance, string $currency): float
     {
-        // Both THB and IDR use 1:1 ratio (no conversion needed)
+        // Use a match expression for cleaner currency value mapping
         $divisor = match ($currency) {
             'THB' => 1, // 1:1 ratio
             'IDR' => 1, // 1:1 ratio
-            default => 1,
+            'IDR2' => 100,
+            'KRW2' => 10,
+            'MMK2' => 1000, // Assuming MMK2 means 1/1000th unit
+            'VND2' => 1000,
+            'LAK2' => 10,
+            'KHR2' => 100,
+            default => 1, // Default to 1 for standard currencies
         };
 
-        return round($balance / $divisor, 2);
+        $precision = in_array($currency, $this->specialCurrencies) ? 4 : 2;
+
+        return round($balance / $divisor, $precision);
     }
 
     /**
      * Gets the currency conversion value for internal processing.
-     * Both THB and IDR use 1:1 ratio.
+     * Regular currencies (THB, IDR) use 1:1 ratio, special currencies use different ratios.
      */
     private function getCurrencyValue(string $currency): int|float
     {
         return match ($currency) {
             'THB' => 1, // 1:1 ratio
             'IDR' => 1, // 1:1 ratio
+            'IDR2' => 100,
+            'KRW2' => 10,
+            'MMK2' => 1000, // Assuming MMK2 implies external unit * 1000 = internal unit
+            'VND2' => 1000,
+            'LAK2' => 10,
+            'KHR2' => 100,
             default => 1,
         };
     }
