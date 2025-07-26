@@ -24,14 +24,9 @@ class WithdrawController extends Controller
     protected WalletService $walletService;
 
     /**
-     * @var array Allowed currencies for withdraw.
+     * @var array Allowed currencies for withdraw - only THB and IDR with 1:1 ratio.
      */
-    private array $allowedCurrencies = ['THB', 'MMK', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
-
-    /**
-     * @var array Currencies requiring special conversion (e.g., 1:1000).
-     */
-    private array $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+    private array $allowedCurrencies = ['THB', 'IDR'];
 
     /**
      * @var array Actions considered as debits/withdrawals.
@@ -402,39 +397,29 @@ class WithdrawController extends Controller
     }
 
     /**
-     * Formats the balance based on the currency and its scaling.
+     * Formats the balance based on the currency - both THB and IDR use 1:1 ratio.
      */
     private function formatBalance(float $balance, string $currency): float
     {
-        // Use a match expression for cleaner currency value mapping
+        // Both THB and IDR use 1:1 ratio (no conversion needed)
         $divisor = match ($currency) {
-            'IDR2' => 100,
-            'KRW2' => 10,
-            'MMK2' => 1000, // Assuming MMK2 means 1/1000th unit
-            'VND2' => 1000,
-            'LAK2' => 10,
-            'KHR2' => 100,
-            default => 1, // Default to 1 for standard currencies
+            'THB' => 1, // 1:1 ratio
+            'IDR' => 1, // 1:1 ratio
+            default => 1,
         };
 
-        $precision = in_array($currency, $this->specialCurrencies) ? 4 : 2;
-
-        return round($balance / $divisor, $precision);
+        return round($balance / $divisor, 2);
     }
 
     /**
      * Gets the currency conversion value for internal processing.
-     * This is the multiplier to convert external API amount to internal base unit.
+     * Both THB and IDR use 1:1 ratio.
      */
     private function getCurrencyValue(string $currency): int|float
     {
         return match ($currency) {
-            'IDR2' => 100,
-            'KRW2' => 10,
-            'MMK2' => 1000, // Assuming MMK2 implies external unit * 1000 = internal unit
-            'VND2' => 1000,
-            'LAK2' => 10,
-            'KHR2' => 100,
+            'THB' => 1, // 1:1 ratio
+            'IDR' => 1, // 1:1 ratio
             default => 1,
         };
     }
