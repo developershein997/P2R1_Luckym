@@ -9,8 +9,8 @@ use App\Models\Admin\Banner;
 use App\Models\Admin\BannerAds;
 use App\Models\Admin\BannerText;
 use App\Models\Admin\Permission;
-use App\Models\Admin\ReportTransaction;
 use App\Models\Admin\Promotion;
+use App\Models\Admin\ReportTransaction;
 use App\Models\Admin\Role;
 use App\Models\Admin\TopTenWithdraw;
 use App\Models\PlaceBet;
@@ -29,13 +29,15 @@ class User extends Authenticatable implements Wallet
 {
     use HasApiTokens, HasFactory, HasWalletFloat, Notifiable;
 
-    private const PLAYER_ROLE = 4;
+    private const PLAYER_ROLE = 5;
 
-    private const AGENT_ROLE = 2;
+    private const AGENT_ROLE = 3;
 
-    private const SUB_AGENT_ROLE = 3;
+    private const SUB_AGENT_ROLE = 4;
 
     private const ADMIN_ROLE = 1; // 10.00
+
+    private const MASTER_ROLE = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -105,7 +107,7 @@ class User extends Authenticatable implements Wallet
     // A user can have children (e.g., Admin has many Agents, or Agent has many Players)
     public function children()
     {
-        return $this->hasMany(User::class, 'agent_id');
+        return $this->hasMany(User::class, 'agent_id', 'id');
     }
 
     // A user belongs to an agent (parent)
@@ -229,21 +231,62 @@ class User extends Authenticatable implements Wallet
     }
 
     public function hasPermission($permission)
-    {
-        // If user is a parent agent, they have all permissions
-        if ($this->hasRole('Agent')) {
-            return true;
-        }
-
-        // For sub-agents, check their specific permissions
-        if ($this->hasRole('SubAgent')) {
-            return $this->permissions()
-                ->where('title', $permission)
-                ->exists();
-        }
-
-        return false;
+{
+    // Owner has all permissions
+    if ($this->hasRole('Owner')) {
+        return true;
     }
+
+    // Master has all permissions
+    if ($this->hasRole('Master')) {
+        return true;
+    }
+
+    // Agent has all permissions
+    if ($this->hasRole('Agent')) {
+        return true;
+    }
+
+    // SubAgent has specific permissions only
+    if ($this->hasRole('SubAgent')) {
+        return $this->permissions()
+            ->where('title', $permission)
+            ->exists();
+    }
+
+    // Default: deny permission
+    return false;
+}
+
+
+    // public function hasPermission($permission)
+    // {
+        
+        
+
+    //     // owner
+    //     if ($this->hasRole('Owner')) {
+
+    //         // master 
+    //     if($this->hasRole('Master')){
+    //         return true;
+    //     }
+
+    //     // If user is a parent agent, they have all permissions
+    //     if ($this->hasRole('Agent')) {
+    //         return true;
+    //     }
+
+    //     // For sub-agents, check their specific permissions
+    //     if ($this->hasRole('SubAgent')) {
+    //         return $this->permissions()
+    //             ->where('title', $permission)
+    //             ->exists();
+    //     }
+
+    //     return false;
+    // }
+    // }
 
     // public function getAllDescendantPlayers()
     // {

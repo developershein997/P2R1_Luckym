@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GSC PLUS | Dashboard</title>
+    <title>TTTGaming | Login</title>
 
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
@@ -15,7 +15,7 @@
         @media (max-width: 768px) {
             .login-page {
                 background-size: cover;
-                background-image: url(img/mobile.png);
+                background-image: url(img/logo/logo.jpg);
                 padding: 20px;
                 /* Add padding for smaller screens */
             }

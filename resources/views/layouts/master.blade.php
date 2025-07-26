@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GSC PLUS | Dashboard</title>
+    <title>TTTGaming | Dashboard</title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -108,7 +108,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
              <a href="{{ route('home') }}" class="brand-link">
-            <img src="{{ asset('assets/img/logo/red_logo.png') }}" alt="AdminLTE Logo"
+            <img src="{{ asset('assets/img/logo/logo_red.png') }}" alt="AdminLTE Logo"
                 class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">TTTGaming</span>
             </a> 
@@ -137,8 +137,17 @@
                             </a>
                         </li>
 
-                       
-                       
+                        @can('owner_access')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.master.index') }}"
+                                    class="nav-link {{ Route::current()->getName() == 'admin.master.index' ? 'active' : '' }}">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Master List
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
                     
                         @can('agent_index')
                             <li class="nav-item">
@@ -151,7 +160,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('transfer_log')
+                        @can('view_player_list')
                             <li class="nav-item">
                                 <a href="{{ route('admin.player.index') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.player.index' ? 'active' : '' }}">
@@ -184,7 +193,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @if(Auth::user()->hasPermission('process_withdraw'))
+                        @can('subagent_access')
                             <li class="nav-item">
                                 <a href="{{ route('admin.agent.withdraw') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.agent.withdraw' ? 'active' : '' }}">
@@ -194,8 +203,9 @@
                                     </p>
                                 </a>
                             </li>
-                        @endif
-                        @if(Auth::user()->hasPermission('process_deposit') || Auth::user()->hasPermission('view_deposit_requests'))
+                        @endcan
+                        
+                        @can('subagent_access')
                             <li class="nav-item">
                                 <a href="{{ route('admin.agent.deposit') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.agent.deposit' ? 'active' : '' }}">
@@ -205,7 +215,7 @@
                                     </p>
                                 </a>
                             </li>
-                        @endif
+                        @endcan
                         @can('transfer_log')
                         <li class="nav-item">
                             <a href="{{ route('admin.transfer-logs.index') }}"
@@ -621,7 +631,7 @@
             @yield('content')
         </div>
         <footer class="main-footer">
-            <strong>Copyright &copy; 2025 <a href="">GSC PLUS</a>.</strong>
+            <strong>Copyright &copy; 2025 <a href="">TTTGaming</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 3.2.2

@@ -28,12 +28,12 @@ use App\Http\Controllers\Api\V1\Promotion\PromotionController as PromotionContro
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\Shan\ShanGetBalanceController;
 use App\Http\Controllers\Api\V1\Shan\ShanTransactionController;
+use App\Http\Controllers\Api\V1\TwoDigit\TwoDigitBetController;
 use App\Http\Controllers\Api\V1\Wallet\WalletController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
+use App\Http\Controllers\Api\V2\Shan\ShankomeeGetBalanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\TwoDigit\TwoDigitBetController;
-use App\Http\Controllers\Api\V2\Shan\ShankomeeGetBalanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // user api
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('/banks', [GSCPlusProviderController::class, 'banks']);
+    Route::get('contact', [ContactController::class, 'get']);
+    Route::get('promotion', [PromotionController::class, 'index']);
 
     // fanicial api
     Route::get('agentfinicialPaymentType', [BankController::class, 'all']);
@@ -86,19 +88,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('withdrawfinicial', [WithDrawRequestController::class, 'FinicalWithdraw']);
     Route::get('withdrawlogfinicial', [WithDrawRequestController::class, 'log']);
 
-    Route::get('contact', [ContactController::class, 'get']);
-    Route::get('promotion', [PromotionController::class, 'index']);
-    Route::get('winnerText', [BannerController::class, 'winnerText']);
-    Route::get('banner_Text', [BannerController::class, 'bannerText']);
-    Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
-    Route::get('banner', [BannerController::class, 'index']);
-    Route::get('videoads', [BannerController::class, 'ApiVideoads']);
-    Route::get('toptenwithdraw', [BannerController::class, 'TopTen']);
-
     // Player game logs
     Route::get('/player/game-logs', [GameLogController::class, 'index']);
     Route::get('user', [AuthController::class, 'getUser']);
-    // 2d route 
+    
+    // 2d route
     Route::post('/twod-bet', [TwoDigitBetController::class, 'store']);
     Route::get('/twod-bet-slips', [TwoDigitBetController::class, 'myBetSlips']);
     // evening-twod-bet-slips
@@ -107,8 +101,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // shan launch game
     Route::post('shan-launch-game', [ShanLaunchGameController::class, 'launch']);
 
-
 });
+
+
+Route::get('winnerText', [BannerController::class, 'winnerText']);
+Route::get('banner_Text', [BannerController::class, 'bannerText']);
+Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
+Route::get('banner', [BannerController::class, 'index']);
+Route::get('videoads', [BannerController::class, 'ApiVideoads']);
+Route::get('toptenwithdraw', [BannerController::class, 'TopTen']);
 
 // games
 Route::get('/game_types', [GSCPlusProviderController::class, 'gameTypes']);
@@ -124,7 +125,7 @@ Route::group(['prefix' => 'shanreport', 'middleware' => ['auth:sanctum']], funct
 
 Route::group(['prefix' => 'shan'], function () {
     Route::post('getbalance', [ShanGetBalanceController::class, 'getBalance']);
-    //Route::post('launch-game', [ShanLaunchGameController::class, 'launch']);
+    // Route::post('launch-game', [ShanLaunchGameController::class, 'launch']);
 });
 
 // provider shan api
