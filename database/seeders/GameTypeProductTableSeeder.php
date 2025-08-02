@@ -102,6 +102,36 @@ class GameTypeProductTableSeeder extends Seeder
             ['product_id' => 40, 'game_type_id' => 5, 'image' => 'BGaming.png', 'rate' => 1.0000],
             // product_id => 41, game_type => 'OTHER' -> game_type_id => 13
             ['product_id' => 41, 'game_type_id' => 13, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 42, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 42, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 43, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 43, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 44, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 44, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 45, game_type => 'FISHING' -> game_type_id => 8
+            ['product_id' => 45, 'game_type_id' => 8, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 46, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 46, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 47, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 47, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 48, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 48, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 49, game_type => 'FISHING' -> game_type_id => 8
+            ['product_id' => 49, 'game_type_id' => 8, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 50, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 50, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 51, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 51, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 52, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 52, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 53, game_type => 'FISHING' -> game_type_id => 8
+            ['product_id' => 53, 'game_type_id' => 8, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 54, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 54, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 55, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 55, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
+            // product_id => 56, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 56, 'game_type_id' => 1, 'image' => 'MrSlotty.png', 'rate' => 1.0000],
             // product_id => 57, game_type => 'SLOT' -> game_type_id => 1
             ['product_id' => 57, 'game_type_id' => 1, 'image' => 'Playace.png', 'rate' => 1.0000],
             // product_id => 58, game_type => 'LIVE_CASINO' -> game_type_id => 2
@@ -134,6 +164,10 @@ class GameTypeProductTableSeeder extends Seeder
             ['product_id' => 71, 'game_type_id' => 8, 'image' => 'Fachi.png', 'rate' => 1.0000],
             // product_id => 72, game_type => 'SLOT' -> game_type_id => 1
             ['product_id' => 72, 'game_type_id' => 1, 'image' => 'novomatic.png', 'rate' => 1.0000],
+            // product_id => 73, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 73, 'game_type_id' => 1, 'image' => 'novomatic.png', 'rate' => 1.0000],
+            // product_id => 74, game_type => 'SPORT_BOOK' -> game_type_id => 3
+            ['product_id' => 74, 'game_type_id' => 3, 'image' => 'novomatic.png', 'rate' => 1.0000],
             // product_id => 75, game_type => 'OTHER' -> game_type_id => 13
             ['product_id' => 75, 'game_type_id' => 13, 'image' => 'aviatrix.jfif', 'rate' => 1.0000],
             // product_id => 76, game_type => 'SLOT' -> game_type_id => 1
@@ -146,14 +180,38 @@ class GameTypeProductTableSeeder extends Seeder
             ['product_id' => 79, 'game_type_id' => 4, 'image' => 'WorldEntertainment.png', 'rate' => 1.0000],
             // product_id => 80, game_type => 'LIVE_CASINO' -> game_type_id => 2
             ['product_id' => 80, 'game_type_id' => 2, 'image' => 'WorldEntertainment.png', 'rate' => 1.0000],
+            // product_id => 81, game_type => 'SPORT_BOOK' -> game_type_id => 3
+            ['product_id' => 81, 'game_type_id' => 3, 'image' => 'WorldEntertainment.png', 'rate' => 1.0000],
             // product_id => 82, game_type => 'SLOT' -> game_type_id => 1
             ['product_id' => 82, 'game_type_id' => 1, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 83, game_type => 'LIVE_CASINO' -> game_type_id => 2
+            ['product_id' => 83, 'game_type_id' => 2, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 84, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 84, 'game_type_id' => 1, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 85, game_type => 'LIVE_CASINO' -> game_type_id => 2
+            ['product_id' => 85, 'game_type_id' => 2, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 86, game_type => 'LIVE_CASINO' -> game_type_id => 2
+            ['product_id' => 86, 'game_type_id' => 2, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 87, game_type => 'LIVE_CASINO' -> game_type_id => 2
+            ['product_id' => 87, 'game_type_id' => 2, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 88, game_type => 'OTHER' -> game_type_id => 13
+            ['product_id' => 88, 'game_type_id' => 13, 'image' => 'rich_88.png', 'rate' => 1.0000],
+            // product_id => 89, game_type => 'POKER' -> game_type_id => 12
+            ['product_id' => 89, 'game_type_id' => 12, 'image' => 'rich_88.png', 'rate' => 1.0000],
             // product_id => 90, game_type => 'LIVE_CASINO' -> game_type_id => 2
             ['product_id' => 90, 'game_type_id' => 2, 'image' => 'Yee_Bet_Casino.png', 'rate' => 1.0000],
+            // product_id => 91, game_type => 'SLOT' -> game_type_id => 1
+            ['product_id' => 91, 'game_type_id' => 1, 'image' => 'Yee_Bet_Casino.png', 'rate' => 1.0000],
+            // product_id => 92, game_type => 'LIVE_CASINO' -> game_type_id => 2
+            ['product_id' => 92, 'game_type_id' => 2, 'image' => 'Yee_Bet_Casino.png', 'rate' => 1.0000],
             // product_id => 93, game_type => 'POKER' -> game_type_id => 12
             ['product_id' => 93, 'game_type_id' => 12, 'image' => 's_bo.png', 'rate' => 1.0000],
+            // product_id => 94, game_type => 'VIRTUAL_SPORT' -> game_type_id => 4
+            ['product_id' => 94, 'game_type_id' => 4, 'image' => 's_bo.png', 'rate' => 1.0000],
             // product_id => 95, game_type => 'LIVE_CASINO' -> game_type_id => 2
             ['product_id' => 95, 'game_type_id' => 2, 'image' => 's_bo.png', 'rate' => 1.0000],
+            // product_id => 96, game_type => 'SPORT_BOOK' -> game_type_id => 3
+            ['product_id' => 96, 'game_type_id' => 3, 'image' => 's_bo.png', 'rate' => 1.0000],
         ];
 
         DB::table('game_type_product')->insert($data);
