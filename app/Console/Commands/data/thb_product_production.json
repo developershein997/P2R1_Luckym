@@ -185,7 +185,7 @@
         {
             "provider": "BigGaming",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 34,
             "product_id": 1233,
             "product_code": 1004,
@@ -219,7 +219,7 @@
         {
             "provider": "WBet",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 19,
             "product_id": 1229,
             "product_code": 1040,
@@ -659,7 +659,7 @@
         {
             "provider": "WorldEntertainment",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 120,
             "product_id": 1259,
             "product_code": 1172,
@@ -670,7 +670,7 @@
         {
             "provider": "WorldEntertainment",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 120,
             "product_id": 1261,
             "product_code": 1172,
@@ -681,7 +681,7 @@
         {
             "provider": "WorldEntertainment",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 120,
             "product_id": 1276,
             "product_code": 1172,
@@ -692,7 +692,7 @@
         {
             "provider": "FB Sports",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 123,
             "product_id": 1275,
             "product_code": 1183,
@@ -703,7 +703,7 @@
         {
             "provider": "Rich88",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 124,
             "product_id": 1277,
             "product_code": 1184,
@@ -714,7 +714,7 @@
         {
             "provider": "FBGames",
             "currency": "THB",
-            "status": "ACTIVATED",
+            "status": "DEACTIVATED",
             "provider_id": 128,
             "product_id": 1299,
             "product_code": 1193,
