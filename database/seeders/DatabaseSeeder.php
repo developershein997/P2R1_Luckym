@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
             JDBSFishingameSeeder::class,
             JDBOtherGameSeeder::class,
             PlayStarGameSeeder::class,
-            CT855CasinoGameSeeder::class,
+            //CT855CasinoGameSeeder::class,
             CQ9SlotGameSeeder::class,
             CQ9FishingGameSeeder::class,
             JILISlotGameSeeder::class,
