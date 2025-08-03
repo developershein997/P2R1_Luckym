@@ -81,11 +81,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         | Balance: {{ number_format(auth()->user()->wallet->balanceFloat, 2) }}
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#"
