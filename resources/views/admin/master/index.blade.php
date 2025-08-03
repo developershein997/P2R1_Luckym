@@ -34,7 +34,7 @@
                                 <th>Phone</th>
                                 <th>Status</th>
                                 <th>Balance</th>
-                                <th>Total Winlose Amt</th>
+                                {{-- <th>Total Winlose Amt</th> --}}
                                 <th>Action</th>
                                 <th>Transfer</th>
                             </thead>
@@ -44,7 +44,7 @@
                                 @if (count($users) > 0)
                                 @foreach ($users as $user)
                                 <tr class="text-center">
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</td>
                                     <td>
                                         <span class="d-block">{{ $user->name }}</span>
                                     </td>
@@ -65,7 +65,7 @@
 
                                         // $totalAmt = $poneWintAmt + $result + $betNResults; --}}
 
-                                    <td class="{{ $user->win_lose >= 0 ? 'text-success text-bold' : 'text-danger text-bold'}}">{{number_format($user->win_lose)}}</td>
+                                    {{-- <td class="{{ $user->win_lose >= 0 ? 'text-success text-bold' : 'text-danger text-bold'}}">{{number_format($user->win_lose)}}</td> --}}
 
                                     <td>
                                         @if ($user->status == 1)
@@ -136,7 +136,7 @@
                                             <i class="fa-solid fa-money-bill-transfer"></i>
                                             Transfer Logs
                                         </a>
-                                        
+
 
 
                                     </td>
@@ -153,6 +153,9 @@
                             </tbody>
 
                         </table>
+                        <div class="d-flex justify-content-center mt-2">
+                            {{$users->links()}}
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
