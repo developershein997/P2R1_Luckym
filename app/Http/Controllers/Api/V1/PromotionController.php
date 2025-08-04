@@ -17,7 +17,7 @@ class PromotionController extends Controller
 
         $admin = $user->parent->parent->agent_id;
 
-        $data = Promotion::where('admin_id', $admin)->get();
+        $data = Promotion::all();
         //$data = Promotion::get();
 
         return $this->success($data, 'Promotion retrieved successfully.');

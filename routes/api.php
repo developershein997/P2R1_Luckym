@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // user api
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('/banks', [GSCPlusProviderController::class, 'banks']);
+    Route::get('contact', [ContactController::class, 'get']);
 
 
     // fanicial api
@@ -109,7 +110,6 @@ Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
 Route::get('banner', [BannerController::class, 'index']);
 Route::get('videoads', [BannerController::class, 'ApiVideoads']);
 Route::get('toptenwithdraw', [BannerController::class, 'TopTen']);
-Route::get('contact', [ContactController::class, 'get']);
 Route::get('promotion', [PromotionController::class, 'index']);
 
 // games
