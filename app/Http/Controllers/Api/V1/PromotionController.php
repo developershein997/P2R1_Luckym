@@ -13,9 +13,9 @@ class PromotionController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        $admin = $user->parent->parent->agent_id;
+        // $admin = $user->parent->parent->agent_id;
 
         $data = Promotion::all();
         //$data = Promotion::get();
