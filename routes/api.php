@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Player\AutoPlayerCreateController;
 use App\Http\Controllers\Api\Player\GameLogController;
 use App\Http\Controllers\Api\Player\TransactionController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
@@ -53,6 +54,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+// guest-register route 
+Route::post('/guest-register', [AutoPlayerCreateController::class, 'register']);
 
 Route::get('product-list', [ProductListController::class, 'index']);
 Route::get('operators/provider-games', [GameListController::class, 'index']);

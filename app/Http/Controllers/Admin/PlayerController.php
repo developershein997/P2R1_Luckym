@@ -643,5 +643,8 @@ class PlayerController extends Controller
             return $this->isExistingSubAgent(Auth::id());
         }
 
-    }
+    } 
+    
 }
+
+
