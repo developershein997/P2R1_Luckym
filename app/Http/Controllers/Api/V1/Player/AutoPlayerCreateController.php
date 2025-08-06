@@ -20,7 +20,7 @@ class AutoPlayerCreateController extends Controller
             'name' => 'required|string|max:255',
             'user_name' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|confirmed',
             'agent_id' => 'nullable|exists:users,id',
             'status' => 'required|integer|in:1',
             'is_changed_password' => 'required|integer|in:1',
