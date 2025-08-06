@@ -146,6 +146,8 @@ class PlayerController extends Controller
             ];
         });
 
+
+
         return view('admin.player.index', compact('users'));
     }
     // public function index()

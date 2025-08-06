@@ -38,11 +38,13 @@
                                     <th>Status</th>
                                     <th>Balance</th>
                                     <!-- <th>Total Winlose Amt</th> -->
+                                    @can('master_access')
                                     <th>Action</th>
+                                    @endcan
                                     <!-- <th>Transfer</th> -->
                                 </thead>
                                 <tbody >
-                                   
+
                                     @if (isset($users))
                                         @if (count($users) > 0)
                                             @foreach ($users as $user)
@@ -70,7 +72,7 @@
                                                     $totalAmt = $poneWintAmt + $result + $betNResults; --}}
 
                                                     <!-- <td class="{{$user->win_lose >= 0 ? 'text-success text-bold' : 'text-danger text-bold'}}">{{ number_format($user->win_lose) }}</td> -->
-
+                                                @can('master_access')
                                                     <td>
                                                         @if ($user->status == 1)
                                                             <a onclick="event.preventDefault(); document.getElementById('banUser-{{ $user->id }}').submit();"
@@ -146,6 +148,7 @@
 
                                                     </td>
                                                 </tr>
+                                            @endcan
                                             @endforeach
                                         @else
                                             <tr>
@@ -158,6 +161,9 @@
                                 </tbody>
 
                             </table>
+                            <div>
+                                {{$users->links()}}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

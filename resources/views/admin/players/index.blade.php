@@ -16,7 +16,7 @@
                     @endif
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table id="mytable1" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -62,4 +62,5 @@
         </div>
     </div>
 </div>
-@endsection 
+
+@endsection

@@ -82,7 +82,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('/banks', [GSCPlusProviderController::class, 'banks']);
     Route::get('contact', [ContactController::class, 'get']);
-    Route::get('promotion', [PromotionController::class, 'index']);
+
 
     // fanicial api
     Route::get('agentfinicialPaymentType', [BankController::class, 'all']);
@@ -95,7 +95,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Player game logs
     Route::get('/player/game-logs', [GameLogController::class, 'index']);
     Route::get('user', [AuthController::class, 'getUser']);
-    
+
     // 2d route
     Route::post('/twod-bet', [TwoDigitBetController::class, 'store']);
     Route::get('/twod-bet-slips', [TwoDigitBetController::class, 'myBetSlips']);
@@ -114,6 +114,7 @@ Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
 Route::get('banner', [BannerController::class, 'index']);
 Route::get('videoads', [BannerController::class, 'ApiVideoads']);
 Route::get('toptenwithdraw', [BannerController::class, 'TopTen']);
+Route::get('promotion', [PromotionController::class, 'index']);
 
 // games
 Route::get('/game_types', [GSCPlusProviderController::class, 'gameTypes']);
