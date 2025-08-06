@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Log;
 
 class AutoPlayerCreateController extends Controller
 {
+    
+    private const PLAYER_ROLE = 5;
+    
     public function register(Request $request)
     {
         // Validate the request
@@ -36,6 +39,23 @@ class AutoPlayerCreateController extends Controller
             ], 422);
         }
 
+        $agent_referral_code = 'AGENTshk8H1';
+
+        $agent = User::where('referral_code', $agent_referral_code)->first();
+
+        Log::info([
+            'agent_id' => $agent->id,
+            'agent_referral_code' => $agent_referral_code,
+            'agent_name' => $agent->name,
+            'agent_user_name' => $agent->user_name,
+        ]);
+
+        if (!$agent) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Agent not found',
+            ], 404);
+        }
         try {
             // Create the guest user
             $user = User::create([
@@ -43,15 +63,18 @@ class AutoPlayerCreateController extends Controller
                 'user_name' => $request->user_name,
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
-                'agent_id' => $request->agent_id,
+                'agent_id' => $agent->id,
                 'status' => 1,
                 'is_changed_password' => $request->is_changed_password,
                 'type' => $request->type,
                 'referral_code' => $request->referral_code,
             ]);
 
+            $user->roles()->sync(self::PLAYER_ROLE);
+
+
             // Generate token
-            $token = $user->createToken('guest-token')->plainTextToken;
+            $token = $user->createToken($user->user_name)->plainTextToken;
 
             return response()->json([
                 'status' => 'success',
