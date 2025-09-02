@@ -76,7 +76,7 @@
               <tbody>
                           <tr>
                               <th>ID</th>
-                              <td>{!! $adsbanner->id !!}</td>
+                              <td>1</td>
                           </tr>
                           <tr>
                               <th>Image</th>

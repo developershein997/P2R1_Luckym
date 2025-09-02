@@ -18,11 +18,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    @if (!$banner)
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('admin.adsbanners.create') }}" class="btn bg-gradient-success btn-sm mb-0">+&nbsp;
                             New
                             Banner Ads</a>
                     </div>
+                    @endif
                     <div class="card " style="border-radius: 20px;">
                         <div class="card-header">
                             <h3>Banner Ads Lists </h3>
@@ -39,9 +41,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($banners as $key => $banner)
+                                    @if($banner)
                                         <tr>
-                                            <td class="text-sm font-weight-normal">{{ ++$key }}</td>
+                                            <td class="text-sm font-weight-normal">1</td>
                                             <td>
                                                 <img width="100px" class="img-thumbnail" src="{{ $banner->img_url }}"
                                                     alt="">
@@ -70,7 +72,7 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

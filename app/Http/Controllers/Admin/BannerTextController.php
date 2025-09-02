@@ -20,9 +20,9 @@ class BannerTextController extends Controller
 
     public function index()
     {
-        $texts = BannerText::all(); // Fetch banners for the logged-in admin
+        $text = BannerText::first(); // Fetch banners for the logged-in admin
 
-        return view('admin.banner_text.index', compact('texts'));
+        return view('admin.banner_text.index', compact('text'));
     }
 
     /**

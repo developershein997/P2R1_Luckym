@@ -21,10 +21,10 @@ class BannerAdsController extends Controller
 
     public function index()
     {
-        $banners = BannerAds::all(); // Fetch banners for the logged-in admin
+        $banner = BannerAds::first(); // Fetch banners for the logged-in admin
         // return $banners;
 
-        return view('admin.banner_ads.index', compact('banners'));
+        return view('admin.banner_ads.index', compact('banner'));
     }
 
     /**

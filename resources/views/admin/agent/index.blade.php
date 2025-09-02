@@ -40,6 +40,8 @@
                                     <!-- <th>Total Winlose Amt</th> -->
                                     @can('master_access')
                                     <th>Action</th>
+                                    <th>Transaction</th>
+
                                     @endcan
                                     <!-- <th>Transfer</th> -->
                                 </thead>

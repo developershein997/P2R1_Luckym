@@ -18,10 +18,17 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    @if (!$text)
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('admin.text.create') }}" class="btn bg-gradient-success btn-sm mb-0">+&nbsp; New
                             Banner Text</a>
                     </div>
+                    @else
+                      <div class="d-flex justify-content-end mb-3">
+                        {{-- <a href="{{ route('admin.text.create') }}" class="btn bg-gradient-success btn-sm mb-0">+&nbsp; New
+                            Banner Text</a> --}}
+                    </div>
+                    @endif
                     <div class="card " style="border-radius: 20px;">
                         <div class="card-header">
                             <h3>Banner Text Lists </h3>
@@ -37,9 +44,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($texts as $key => $text)
-                                        <tr>
-                                            <td class="text-sm font-weight-normal">{{ ++$key }}</td>
+                                    @if ($text)
+                                         <tr>
+                                            <td class="text-sm font-weight-normal">1</td>
                                             <td>{{ $text->text }}</td>
                                             <td class="text-sm font-weight-normal">{{ $text->created_at->format('M j, Y') }}
                                             </td>
@@ -62,7 +69,8 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endif
+
                                 </tbody>
                             </table>
                         </div>

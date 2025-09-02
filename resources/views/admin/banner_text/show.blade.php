@@ -74,7 +74,7 @@
             <tbody>
               <tr>
                 <td>ID</td>
-                <td>{!! $text->id !!}</td>
+                <td>1</td>
               </tr>
               <tr>
                 <td>Banner Text</td>
