@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\TransactionName;
 use App\Enums\UserType;
 use App\Models\Admin\UserLog;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransferLog;
 use App\Models\User;
@@ -275,5 +276,24 @@ class HomeController extends Controller
     }
 
     // updated by KS
+    public function providerIndex() {
+        $providers = Product::all();
 
+        // dd($providers);
+        return view('admin.providers.index',compact('providers'));
+    }
+
+    public function providerStatusUpdate($id) {
+        $provider = Product::find($id);
+        if($provider->game_list_status == 1) {
+            $provider->game_list_status = 0;
+        } else {
+            $provider->game_list_status = 1;
+        }
+
+        $provider->save();
+
+
+        return redirect()->route('admin.provider-index');
+    }
 }
