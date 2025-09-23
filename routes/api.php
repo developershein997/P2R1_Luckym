@@ -55,7 +55,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-// guest-register route 
+// guest-register route
 Route::post('/guest-register', [AutoPlayerCreateController::class, 'register']);
 
 Route::get('product-list', [ProductListController::class, 'index']);
@@ -159,6 +159,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
     Route::get('/banks', [BankControllerAlias::class, 'all']);
+    Route::get('/payment-types', [BankControllerAlias::class, 'paymentType']);
     Route::get('/promotions', [PromotionControllerAlias::class, 'index']);
     Route::get('/game-list', [GameController::class, 'gameList']);
     Route::get('/launch-game', [LaunchGameController::class, 'launchGame']);

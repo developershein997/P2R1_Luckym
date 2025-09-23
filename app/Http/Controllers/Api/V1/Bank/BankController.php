@@ -18,9 +18,8 @@ class BankController extends Controller
 
     public function all()
     {
-        // $player = Auth::user();
-        // $data = Bank::where('agent_id', $player->agent_id)->get();
-        $data = Bank::all();
+        $player = Auth::user();
+        $data = Bank::where('agent_id', $player->agent_id)->get();
         return $this->success(PaymentTypeResource::collection($data), 'Payment Type list successfule');
     }
 
