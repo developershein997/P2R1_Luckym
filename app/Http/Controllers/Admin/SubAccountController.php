@@ -320,16 +320,16 @@ class SubAccountController extends Controller
         // but since you're already getting all 'bets', we'll adjust the sum on the collection.
         $bets = $query->orderBy('created_at', 'desc')->get();
 
-        // Calculate totals with MMK2 conversion
+        // Calculate totals with THB2 conversion
         $total_stake = $bets->where('wager_status', 'SETTLED')->count(); // Count doesn't need currency conversion
 
-        // Use a custom sum for total_bet and total_win to apply MMK2 conversion
+        // Use a custom sum for total_bet and total_win to apply THB2 conversion
         $total_bet = $bets->where('wager_status', 'SETTLED')->sum(function ($bet) {
-            return $bet->currency == 'MMK2' ? $bet->bet_amount * 1000 : $bet->bet_amount;
+            return $bet->currency == 'THB2' ? $bet->bet_amount / 1000 : $bet->bet_amount;
         });
 
         $total_win = $bets->where('wager_status', 'SETTLED')->sum(function ($bet) {
-            return $bet->currency == 'MMK2' ? $bet->prize_amount * 1000 : $bet->prize_amount;
+            return $bet->currency == 'THB2' ? $bet->prize_amount / 1000 : $bet->prize_amount;
         });
 
         $net_win = $total_win - $total_bet; // Calculated after conversion
