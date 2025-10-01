@@ -93,26 +93,27 @@ class GetBalanceController extends Controller
             if ($user && $user->wallet) {
                 $balance = $user->wallet->balanceFloat;
                 
-                // Apply currency conversion based on the chat message: THB/1000 = THB2
-                if (in_array($request->currency, $specialCurrencies)) {
-                    $balance = $balance / 1000; // Apply 1:1000 conversion for special currencies
-                    $balance = round($balance, 4);
-                } else {
-                    $balance = round($balance, 2); // Regular currencies (THB, IDR) use 1:1 ratio
-                }
+                // Apply currency conversion - divide by currency value to get the provider's expected amount
+                $divisor = $this->getCurrencyValue($request->currency);
+                $convertedBalance = $balance / $divisor;
+                
+                // Set precision based on currency type
+                $precision = in_array($request->currency, $specialCurrencies) ? 4 : 2;
+                $convertedBalance = round($convertedBalance, $precision);
 
                 Log::info('Balance calculated', [
                     'member_account' => $req['member_account'],
                     'original_balance' => $user->wallet->balanceFloat,
-                    'converted_balance' => $balance,
+                    'converted_balance' => $convertedBalance,
                     'currency' => $request->currency,
+                    'divisor' => $divisor,
                     'is_special_currency' => in_array($request->currency, $specialCurrencies),
                 ]);
 
                 $results[] = [
                     'member_account' => $req['member_account'],
                     'product_code' => $req['product_code'],
-                    'balance' => (float) $balance,
+                    'balance' => (float) $convertedBalance,
                     'code' => SeamlessWalletCode::Success->value,
                     'message' => 'Success',
                 ];
@@ -139,5 +140,25 @@ class GetBalanceController extends Controller
         ]);
 
         return ApiResponseService::success($results);
+    }
+
+    /**
+     * Gets the currency conversion value.
+     * Regular currencies (THB, IDR) use 1:1 ratio, special currencies use different ratios.
+     */
+    private function getCurrencyValue(string $currency): int
+    {
+        return match ($currency) {
+            'THB' => 1, // 1:1 ratio
+            'IDR' => 1, // 1:1 ratio
+            'IDR2' => 100,
+            'KRW2' => 10,
+            'MMK2' => 1000,
+            'VND2' => 1000,
+            'LAK2' => 10,
+            'KHR2' => 100,
+            'THB2' => 1000, // 1000 THB = 1 THB2
+            default => 1,
+        };
     }
 }

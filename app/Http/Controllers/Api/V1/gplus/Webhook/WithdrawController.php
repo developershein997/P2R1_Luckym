@@ -26,12 +26,12 @@ class WithdrawController extends Controller
     /**
      * @var array Allowed currencies for withdraw - support both regular (1:1) and special (1:1000) currencies.
      */
-    private array $allowedCurrencies = ['THB', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+    private array $allowedCurrencies = ['THB', 'IDR', 'IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2', 'THB2'];
 
     /**
      * @var array Currencies requiring special conversion (e.g., 1:1000).
      */
-    private array $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2'];
+    private array $specialCurrencies = ['IDR2', 'KRW2', 'MMK2', 'VND2', 'LAK2', 'KHR2', 'THB2'];
 
     /**
      * @var array Actions considered as debits/withdrawals.
@@ -416,6 +416,7 @@ class WithdrawController extends Controller
             'VND2' => 1000,
             'LAK2' => 10,
             'KHR2' => 100,
+            'THB2' => 1000, // 1000 THB = 1 THB2
             default => 1, // Default to 1 for standard currencies
         };
 
@@ -439,6 +440,7 @@ class WithdrawController extends Controller
             'VND2' => 1000,
             'LAK2' => 10,
             'KHR2' => 100,
+            'THB2' => 1000, // 1000 THB = 1 THB2
             default => 1,
         };
     }
